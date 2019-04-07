@@ -18,8 +18,6 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.mail.util.MailSSLSocketFactory;
-
 public class SendMailJob implements Job {
 
     private static final Logger log = LoggerFactory.getLogger(SendMailJob.class);
@@ -34,26 +32,21 @@ public class SendMailJob implements Job {
     }
 
     private void sendMail() throws GeneralSecurityException {
-        String to = "284031995@qq.com";
-        String from = "632835699@qq.com";
-        String host = "smtp.qq.com";
+        String to = "632835699@qq.com";
+        String from = "kid728@aliyun.com";
+        String host = "smtp.aliyun.com";
 
         Properties properties = System.getProperties();
 
         properties.setProperty("mail.smtp.host", host);
         properties.put("mail.smtp.auth", "true");
-
-        // properties.setProperty("mail.user", "kid");
-        // properties.setProperty("mail.password", "728");
-
-        MailSSLSocketFactory sf = new MailSSLSocketFactory();
-        sf.setTrustAllHosts(true);
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.ssl.socketFactory", sf);
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.socketFactory.port", "465");
+        properties.put("mail.smtp.port", "465");
 
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
             public PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("632835699@qq.com", "ftip********bfag"); // 发件人邮件用户名、授权码
+                return new PasswordAuthentication("kid728@aliyun.com", ""); // 发件人邮件用户名、授权码
             }
         });
 
