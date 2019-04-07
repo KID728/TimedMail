@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<configuration>
+      <!-- 定义日志的根目录 -->
+      <property name="LOG_HOME" value="F:/logs" />
+      <!-- 定义日志文件名称 -->
+      <property name="appName" value="mail"></property>
+
+    <!-- ch.qos.logback.core.ConsoleAppender 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} %line: %m %n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
+    <appender name="file"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${appName}.log</File>
+        <encoder>
+            <Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} : %m %n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${appName}-%d{yyyy-MM-dd}-%i.log
+            </FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 将上面两个 appender 关联到我们的项目 -->
+    <logger name="com.kid.mail" level="INFO" additivity="false">
+        <!-- <appender-ref ref="console"/>-->
+        <appender-ref ref="file" />
+    </logger>
+
+    <!-- 日志级别 -->
+    <root>
+        <!-- 定义了ERROR和INFO级别的日志，分别在FILE文件和控制台输出 -->
+        <level value="error" />
+        <level value="info" />
+        <appender-ref ref="file" /> 
+        <!-- <appender-ref ref="console" />-->
+    </root>
+</configuration>
