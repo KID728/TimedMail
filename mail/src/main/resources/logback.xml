@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <configuration>
       <!-- 定义日志的根目录 -->
-      <property name="LOG_HOME" value="F:/logs" />
+      <property name="LOG_HOME" value="./logs" />
       <!-- 定义日志文件名称 -->
       <property name="appName" value="mail"></property>
 
